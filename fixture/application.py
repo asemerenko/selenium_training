@@ -1,11 +1,12 @@
 from selenium import webdriver
 from fixture.session import SessionHelper
+from fixture.menu import MenuHelper
 
 
 class Application:
     def __init__(self, browser, config):
         if browser == "firefox-new":
-            self.wd = webdriver.Firefox(firefox_binary="c:\\Program Files (x86)\\Mozilla Firefox\\firefox.exe")
+            self.wd = webdriver.Firefox()
         elif browser == "firefox-esr":
             self.wd = webdriver.Firefox(capabilities={"marionette": False},
                                         firefox_binary="c:\\Program Files (x86)\\Mozilla Firefox ESR\\firefox.exe")
@@ -21,6 +22,7 @@ class Application:
             raise ValueError("Unrecognized browser %s" % browser)
         print(self.wd.capabilities)
         self.session = SessionHelper(self)
+        self.menu = MenuHelper(self)
         self.wd.implicitly_wait(3)
         self.config = config
         self.base_url = config['web']['baseUrl']

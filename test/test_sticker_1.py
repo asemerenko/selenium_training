@@ -1,4 +1,4 @@
-def test_stiker(app):
+def test_stiker_1(app):
     wd = app.wd
     wd.get("http://localhost/litecart/en/")
     products = wd.find_elements_by_css_selector(".product")

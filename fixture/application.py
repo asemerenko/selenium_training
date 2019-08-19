@@ -31,6 +31,7 @@ class Application:
         self.wd.implicitly_wait(3)
         self.config = config
         self.base_url = config['web']['baseUrl']
+        self.browser = browser
 
     def is_valid(self):
         try:

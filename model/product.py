@@ -2,7 +2,7 @@ class Product:
 
     def __init__(self, name=None, regular_price_text=None, regular_price_color=None, regular_price_height=None,
                  regular_price_style=None, campaign_price_text=None, campaign_price_color=None,
-                 campaign_price_height=None):
+                 campaign_price_height=None, campaign_price_style=None):
         self.name = name
         self.regular_price_text = regular_price_text
         self.regular_price_color = regular_price_color
@@ -11,6 +11,7 @@ class Product:
         self.campaign_price_text = campaign_price_text
         self.campaign_price_color = campaign_price_color
         self.campaign_price_height = campaign_price_height
+        self.campaign_price_style = campaign_price_style
 
     def __eq__(self, other):
         return self.name == other.name \
@@ -27,10 +28,13 @@ class Product:
                and (self.campaign_price_color is None or other.campaign_price_color is None
                     or self.campaign_price_color == other.campaign_price_color) \
                and (self.campaign_price_height is None or other.campaign_price_height is None
-                    or self.campaign_price_height == other.campaign_price_height)
+                    or self.campaign_price_height == other.campaign_price_height) \
+               and (self.campaign_price_style is None or other.campaign_price_style is None
+                    or self.campaign_price_style == other.campaign_price_style)
 
     def __repr__(self):
-        return "Product(%s, %s, %s, %s, %s, %s, %s, %s)" % (self.name, self.regular_price_text,
-                                                            self.regular_price_color, self.regular_price_height,
-                                                            self.regular_price_style, self.campaign_price_text,
-                                                            self.campaign_price_color, self.campaign_price_height)
+        return "Product(%s, %s, %s, %s, %s, %s, %s, %s, %s)" % (self.name, self.regular_price_text,
+                                                                self.regular_price_color, self.regular_price_height,
+                                                                self.regular_price_style, self.campaign_price_text,
+                                                                self.campaign_price_color, self.campaign_price_height,
+                                                                self.campaign_price_style)

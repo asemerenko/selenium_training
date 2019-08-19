@@ -1,6 +1,7 @@
 from selenium import webdriver
 from fixture.session import SessionHelper
 from fixture.menu import MenuHelper
+from fixture.countries import CountriesHelper
 
 
 class Application:
@@ -24,6 +25,7 @@ class Application:
         print(self.wd.capabilities)
         self.session = SessionHelper(self)
         self.menu = MenuHelper(self)
+        self.countries = CountriesHelper(self)
         self.wd.implicitly_wait(3)
         self.config = config
         self.base_url = config['web']['baseUrl']

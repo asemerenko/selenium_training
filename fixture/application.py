@@ -2,6 +2,7 @@ from selenium import webdriver
 from fixture.session import SessionHelper
 from fixture.menu import MenuHelper
 from fixture.countries import CountriesHelper
+from fixture.product import ProductHelper
 
 
 class Application:
@@ -26,6 +27,7 @@ class Application:
         self.session = SessionHelper(self)
         self.menu = MenuHelper(self)
         self.countries = CountriesHelper(self)
+        self.product = ProductHelper(self)
         self.wd.implicitly_wait(3)
         self.config = config
         self.base_url = config['web']['baseUrl']

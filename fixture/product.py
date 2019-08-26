@@ -1,4 +1,8 @@
 from model.product import Product
+import random
+import string
+from selenium.webdriver.support.ui import Select
+import os.path
 
 
 class ProductHelper:
@@ -68,3 +72,41 @@ class ProductHelper:
                        regular_price_height=regular_price_height, regular_price_style=regular_price_style,
                        campaign_price_text=campaign_price_text, campaign_price_color=campaign_price_color,
                        campaign_price_height=campaign_price_height, campaign_price_style=campaign_price_style)
+
+    def go_to_add_new_product_page(self):
+        wd = self.app.wd
+        wd.find_element_by_xpath("//ul[@id='box-apps-menu']").find_element_by_link_text('Catalog').click()
+        wd.find_element_by_id("content").find_element_by_link_text('Rubber Ducks').click()
+        wd.find_element_by_id("content").find_element_by_link_text('Add New Product').click()
+
+    def create_product(self):
+        wd = self.app.wd
+        # General
+        if wd.find_element_by_css_selector(".tabs li.active a").text == 'General':
+            print('true')
+        else:
+            wd.find_element_by_class_name("tabs").find_element_by_link_text('General').click()
+        general = wd.find_element_by_id("tab-general")
+        general.find_element_by_css_selector("input[type='radio'][value='1']").click()
+        self.fill_contact_field_value(general, "name[en]", "Mustachioed Duck")
+        self.fill_contact_field_value(general, "code", self.random_string("rd", 3))
+        Select(general.find_element_by_name("default_category_id")).select_by_visible_text('Rubber Ducks')
+        self.fill_contact_field_value(general, "quantity", "30")
+        Select(general.find_element_by_name("sold_out_status_id")).select_by_visible_text('Temporary sold out')
+        path = self.img_path()
+        general.find_element_by_name("new_images[]").send_keys(path)
+        pass
+
+    def fill_contact_field_value(self, tab, field_name, text):
+        if text is not None:
+            tab.find_element_by_name(field_name).click()
+            tab.find_element_by_name(field_name).clear()
+            tab.find_element_by_name(field_name).send_keys(text)
+
+    def random_string(self, prefix, maxlen):
+        return prefix + ''.join([random.choice(string.digits) for i in range(maxlen)])
+
+    def img_path(self):
+        f = "img\\mustachioed-duck.png"
+        file = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", f)
+        return file

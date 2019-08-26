@@ -3,6 +3,7 @@ from fixture.session import SessionHelper
 from fixture.menu import MenuHelper
 from fixture.countries import CountriesHelper
 from fixture.product import ProductHelper
+from fixture.account import AccountHelper
 
 
 class Application:
@@ -28,6 +29,7 @@ class Application:
         self.menu = MenuHelper(self)
         self.countries = CountriesHelper(self)
         self.product = ProductHelper(self)
+        self.account = AccountHelper(self)
         self.wd.implicitly_wait(3)
         self.config = config
         self.base_url = config['web']['baseUrl']

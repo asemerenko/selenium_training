@@ -81,21 +81,39 @@ class ProductHelper:
 
     def create_product(self):
         wd = self.app.wd
+        name = self.random_string("Mustachioed_Duck", 3)
         # General
-        if wd.find_element_by_css_selector(".tabs li.active a").text == 'General':
-            print('true')
-        else:
+        if wd.find_element_by_css_selector(".tabs li.active a").text != 'General':
             wd.find_element_by_class_name("tabs").find_element_by_link_text('General').click()
         general = wd.find_element_by_id("tab-general")
         general.find_element_by_css_selector("input[type='radio'][value='1']").click()
-        self.fill_contact_field_value(general, "name[en]", "Mustachioed Duck")
+        self.fill_contact_field_value(general, "name[en]", name)
         self.fill_contact_field_value(general, "code", self.random_string("rd", 3))
         Select(general.find_element_by_name("default_category_id")).select_by_visible_text('Rubber Ducks')
         self.fill_contact_field_value(general, "quantity", "30")
         Select(general.find_element_by_name("sold_out_status_id")).select_by_visible_text('Temporary sold out')
         path = self.img_path()
         general.find_element_by_name("new_images[]").send_keys(path)
-        pass
+        general.find_element_by_name("date_valid_from").send_keys("04042004")
+        general.find_element_by_name("date_valid_to").send_keys("04042005")
+        # Information
+        if wd.find_element_by_css_selector(".tabs li.active a").text != 'Information':
+            wd.find_element_by_class_name("tabs").find_element_by_link_text('Information').click()
+        information = wd.find_element_by_id("tab-information")
+        Select(information.find_element_by_name("manufacturer_id")).select_by_visible_text("ACME Corp.")
+        self.fill_contact_field_value(information, "short_description[en]", self.random_string("short_description", 6))
+        information.find_element_by_css_selector(".trumbowyg-editor").click()
+        information.find_element_by_css_selector(".trumbowyg-editor").send_keys(self.random_string("description", 6))
+        # Prices
+        if wd.find_element_by_css_selector(".tabs li.active a").text != 'Prices':
+            wd.find_element_by_class_name("tabs").find_element_by_link_text('Prices').click()
+        prices = wd.find_element_by_id("tab-prices")
+        self.fill_contact_field_value(prices, "purchase_price", 10)
+        Select(prices.find_element_by_name("purchase_price_currency_code")).select_by_visible_text("US Dollars")
+        self.fill_contact_field_value(prices, "prices[USD]", 20)
+        self.fill_contact_field_value(prices, "prices[EUR]", 15)
+        wd.find_element_by_id("content").find_element_by_name("save").click()
+        return name
 
     def fill_contact_field_value(self, tab, field_name, text):
         if text is not None:
@@ -108,5 +126,11 @@ class ProductHelper:
 
     def img_path(self):
         f = "img\\mustachioed-duck.png"
-        file = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", f)
+        file = os.path.abspath(os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", f))
         return file
+
+    def check_product_has_been_added(self, name):
+        wd = self.app.wd
+        wd.find_element_by_xpath("//ul[@id='box-apps-menu']").find_element_by_link_text('Catalog').click()
+        wd.find_element_by_id("content").find_element_by_link_text("Rubber Ducks").click()
+        assert wd.find_element_by_class_name("dataTable").find_element_by_link_text(name)

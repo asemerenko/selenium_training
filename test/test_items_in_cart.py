@@ -1,7 +1,7 @@
 def test_items_in_cart(app):
     n = 3
+    quantity = 1
     product_list = app.cart.get_product_list()
     for ind in range(n):
-        # product_list = \
-        app.cart.add_item_to_cart(product_list)
-    app.cart.go_to_cart_page()
+        app.cart.add_item_to_cart(product_list, quantity)
+    app.cart.del_items_from_cart()

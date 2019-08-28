@@ -9,6 +9,4 @@ class ProductChoice:
                and (self.link is None or other.link is None or self.link == other.link)
 
     def __repr__(self):
-        # return "ProductChoice(%s, %s)" % (self.name, self.link)
-        return "ProductChoice(%s)" % (self.name)
-
+        return "ProductChoice(%s, %s)" % (self.name, self.link)

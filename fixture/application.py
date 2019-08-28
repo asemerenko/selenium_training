@@ -4,6 +4,7 @@ from fixture.menu import MenuHelper
 from fixture.countries import CountriesHelper
 from fixture.product import ProductHelper
 from fixture.account import AccountHelper
+from fixture.cart import CartHelper
 
 
 class Application:
@@ -30,6 +31,7 @@ class Application:
         self.countries = CountriesHelper(self)
         self.product = ProductHelper(self)
         self.account = AccountHelper(self)
+        self.cart = CartHelper(self)
         self.wd.implicitly_wait(3)
         self.config = config
         self.base_url = config['web']['baseUrl']

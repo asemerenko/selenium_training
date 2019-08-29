@@ -5,6 +5,7 @@ from fixture.countries import CountriesHelper
 from fixture.product import ProductHelper
 from fixture.account import AccountHelper
 from fixture.cart import CartHelper
+from fixture.window import WindowHelper
 
 
 class Application:
@@ -31,6 +32,7 @@ class Application:
         self.countries = CountriesHelper(self)
         self.product = ProductHelper(self)
         self.account = AccountHelper(self)
+        self.window = WindowHelper(self)
         self.cart = CartHelper(self)
         self.wd.implicitly_wait(3)
         self.config = config

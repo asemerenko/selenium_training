@@ -2,10 +2,12 @@ from fixture.application import Application
 import pytest
 import json
 import os.path
+from pluggy import HookspecMarker
 
 
 fixture = None
 target = None
+hookspec = HookspecMarker("pytest")
 
 
 def load_config(file):
@@ -32,7 +34,7 @@ def app(request, config):
 
 
 @pytest.fixture
-def start(request, config):
+def start(config):
     fixture.session.ensure_login(username=config['webadmin']['username'], password=config['webadmin']['password'])
 
 
@@ -45,6 +47,7 @@ def stop(request):
     return fixture
 
 
+@hookspec(historic=True)
 def pytest_addoption(parser):
     parser.addoption("--browser", action="store", default="chrome")
     parser.addoption("--target", action="store", default="target.json")

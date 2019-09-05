@@ -28,5 +28,7 @@ def test_example(driver):
     driver.get("http://www.google.com/")
     driver.find_element_by_name("q").send_keys("webdriver")
     driver.implicitly_wait(3)
-    driver.find_element_by_name("_btnK").click()
+    driver.find_element_by_name("btnK").click()
     WebDriverWait(driver, 10).until(ec.title_is("webdriver - Поиск в Google"))
+    for l in driver.get_log("browser"):
+        print(l)

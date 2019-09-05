@@ -6,6 +6,7 @@ from fixture.product import ProductHelper
 from fixture.account import AccountHelper
 from fixture.cart import CartHelper
 from fixture.window import WindowHelper
+from fixture.log import LogHelper
 
 
 class Application:
@@ -34,6 +35,7 @@ class Application:
         self.account = AccountHelper(self)
         self.window = WindowHelper(self)
         self.cart = CartHelper(self)
+        self.log = LogHelper(self)
         self.wd.implicitly_wait(3)
         self.config = config
         self.base_url = config['web']['baseUrl']
